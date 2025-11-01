@@ -1,14 +1,14 @@
 resource "cloudflare_pages_project" "jesses_cookbook" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
-  production_branch = var.project_branch
+  production_branch = var.production_branch
 
   source {
     type = "github"
     config {
       owner         = var.github_owner
       repo_name     = var.github_repo
-      production_branch = var.project_branch
+      production_branch = var.production_branch
     }
   }
 
@@ -32,9 +32,7 @@ resource "cloudflare_pages_project" "jesses_cookbook" {
 }
 
 resource "cloudflare_pages_domain" "jesses_cookbook" {
-  account_id   = var.cloudflare_account_id
-  project_name = var.project_name
+  account_id   = cloudflare_pages_project.jesses_cookbook.account_id
+  project_name = cloudflare_pages_project.jesses_cookbook.name
   domain       = var.project_domain
-
-  depends_on   = [cloudflare_pages_project.jesses_cookbook]
 }
