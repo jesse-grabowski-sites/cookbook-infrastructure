@@ -1,4 +1,4 @@
-resource "cloudflare_pages_project" "jesses-cookbook" {
+resource "cloudflare_pages_project" "jesses_cookbook" {
   account_id        = var.cloudflare_account_id
   name              = var.project_name
   production_branch = var.project_branch
@@ -31,8 +31,10 @@ resource "cloudflare_pages_project" "jesses-cookbook" {
   }
 }
 
-resource "cloudflare_pages_domain" "jesses-cookbook" {
+resource "cloudflare_pages_domain" "jesses_cookbook" {
   account_id   = var.cloudflare_account_id
   project_name = var.project_name
   domain       = var.project_domain
+
+  depends_on   = [cloudflare_pages_project.jesses_cookbook]
 }
