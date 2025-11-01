@@ -39,7 +39,7 @@ variable "production_branch" {
   nullable    = false
 
   validation {
-    condition     = can(regex("^[A-Za-z0-9._/\-]+$", var.production_branch))
+    condition     = can(regex("^[A-Za-z0-9._/-]+$", var.production_branch))
     error_message = "production_branch may only include letters, numbers, dot, underscore, slash, and hyphen."
   }
 }
@@ -72,7 +72,7 @@ variable "project_domain" {
   nullable    = false
 
   validation {
-    condition     = can(regex("(?i)^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$", var.project_domain))
+    condition     = can(regex("(?i)^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,}$", var.project_domain))
     error_message = "project_domain must be a valid DNS name (labels 1–63 chars, no leading/trailing hyphens)."
   }
 }
@@ -84,7 +84,7 @@ variable "node_version" {
   nullable    = false
 
   validation {
-    condition     = can(regex("^\d+\.\d+\.\d+$", var.node_version))
+    condition     = can(regex("^\\d+\\.\\d+\\.\\d+$", var.node_version))
     error_message = "node_version should be a semantic version like 22.16.0."
   }
 }
@@ -108,7 +108,7 @@ variable "build_destination" {
   nullable    = false
 
   validation {
-    condition     = can(regex("^[^\s].*$", var.build_destination))
+    condition     = can(regex("^[^\\s].*$", var.build_destination))
     error_message = "build_destination cannot be empty or start with whitespace."
   }
 }
