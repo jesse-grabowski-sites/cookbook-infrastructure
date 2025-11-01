@@ -5,7 +5,7 @@ variable "cloudflare_api_token" {
   nullable    = false
 
   validation {
-    condition     = length(trim(var.cloudflare_api_token)) > 0
+    condition     = length(trimspace(var.cloudflare_api_token)) > 0
     error_message = "cloudflare_api_token must be a non-empty string (provide via CI secrets or env var)."
   }
 }
@@ -96,7 +96,7 @@ variable "build_command" {
   nullable    = false
 
   validation {
-    condition     = length(trim(var.build_command)) > 0
+    condition     = length(trimspace(var.build_command)) > 0
     error_message = "build_command cannot be empty."
   }
 }
