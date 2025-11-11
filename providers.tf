@@ -10,7 +10,7 @@ terraform {
   }
 
   backend "s3" {
-    bucket = var.terraform_state_bucket_name
+    bucket = "terraform-bucket"
     key    = "cookbook"
     region = "auto"
     skip_credentials_validation = true
