@@ -21,6 +21,8 @@ env:
 jobs:
   plan:
     runs-on: ubuntu-latest
+    outputs:
+      exit_code: ${{ steps.plan.outputs.exit_code }}
     steps:
       - uses: actions/checkout@v4
       - uses: opentofu/setup-opentofu@v1
@@ -36,10 +38,9 @@ jobs:
         id: plan
         run: |
           set -o pipefail
+          ec=0
           tofu plan -input=false -no-color -detailed-exitcode || ec=$?
-          echo "exit_code=${ec:-0}" >> "$GITHUB_OUTPUT"
-          # Reprint plan if you want; above already prints it
-          exit ${ec:-0}
+          echo "exit_code=$ec" >> "$GITHUB_OUTPUT"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_TOKEN_ID }}
           AWS_ENDPOINT_URL_S3: ${{ secrets.TERRAFORM_STATE_BUCKET_ENDPOINT }}
