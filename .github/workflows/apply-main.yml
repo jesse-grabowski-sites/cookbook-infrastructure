@@ -37,10 +37,8 @@ jobs:
       - name: Plan (show in logs)
         id: plan
         run: |
-          set +e
+          trap 'exit_code="$?"; echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"; if [[ "$exit_code" == "2" ]]; then exit 0; fi' EXIT
           tofu plan -input=false -no-color -detailed-exitcode
-          exitcode="$?"
-          echo "exit_code=$exitcode" >> "$GITHUB_OUTPUT"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_TOKEN_ID }}
           AWS_ENDPOINT_URL_S3: ${{ secrets.TERRAFORM_STATE_BUCKET_ENDPOINT }}
