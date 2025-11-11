@@ -1,3 +1,51 @@
+variable "terraform_state_bucket_name" {
+  type        = string
+  description = "Name of the bucket that holds terraform state"
+  sensitive   = true
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^(?=.{3,63}$)[a-z0-9][a-z0-9.-]*[a-z0-9]$", var.terraform_state_bucket_name))
+    error_message = "terraform_state_bucket_name must be 3–63 chars, lowercase letters, numbers, dots, or hyphens; no leading/trailing dots or hyphens."
+  }
+}
+
+variable "terraform_state_bucket_location" {
+  type        = string
+  description = "Region of the terraform state bucket"
+  sensitive   = true
+  nullable    = false
+
+  validation {
+    condition     = can(regex("^[A-Za-z0-9-]+$", var.terraform_state_bucket_location))
+    error_message = "terraform_state_bucket_location may only include letters, numbers, and hyphens (e.g., us-east-1)."
+  }
+}
+
+variable "terraform_state_bucket_endpoint" {
+  type        = string
+  description = "S3 endpoint for the state bucket"
+  sensitive   = true
+  nullable    = false
+
+  validation {
+    condition     = can(regex("(?i)^https?://[A-Za-z0-9.-]+(:[0-9]+)?(/.*)?$", var.terraform_state_bucket_endpoint))
+    error_message = "terraform_state_bucket_endpoint must be a valid HTTP or HTTPS URL (e.g., https://s3.example.com)."
+  }
+}
+
+variable "terraform_state_token_value" {
+  type        = string
+  description = "Access token for the state bucket"
+  sensitive   = true
+  nullable    = false
+
+  validation {
+    condition     = length(trimspace(var.terraform_state_token_value)) > 0
+    error_message = "terraform_state_token_value must be a non-empty string (supply via CI secret or env var)."
+  }
+}
+
 variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API token with least-privilege for managing the Pages project and domain."
