@@ -1,7 +1,6 @@
 variable "terraform_state_bucket_name" {
   type        = string
   description = "Name of the bucket that holds terraform state"
-  sensitive   = true
   nullable    = false
 
   validation {
