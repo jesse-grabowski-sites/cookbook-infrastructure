@@ -37,10 +37,10 @@ jobs:
       - name: Plan (show in logs)
         id: plan
         run: |
-          set -o pipefail
-          ec=0
-          tofu plan -input=false -no-color -detailed-exitcode || ec=$?
-          echo "exit_code=$ec" >> "$GITHUB_OUTPUT"
+          set +e
+          tofu plan -input=false -no-color -detailed-exitcode
+          exitcode="$?"
+          echo "exit_code=$exitcode" >> "$GITHUB_OUTPUT"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_TOKEN_ID }}
           AWS_ENDPOINT_URL_S3: ${{ secrets.TERRAFORM_STATE_BUCKET_ENDPOINT }}
