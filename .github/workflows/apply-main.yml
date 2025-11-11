@@ -41,6 +41,9 @@ jobs:
           # Reprint plan if you want; above already prints it
           exit ${ec:-0}
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_TOKEN_ID }}
+          AWS_ENDPOINT_URL_S3: ${{ secrets.TERRAFORM_STATE_BUCKET_ENDPOINT }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_TOKEN_VALUE }}
           TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
 
@@ -63,5 +66,8 @@ jobs:
       - name: Apply
         run: tofu apply -input=false -auto-approve
         env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.TERRAFORM_STATE_TOKEN_ID }}
+          AWS_ENDPOINT_URL_S3: ${{ secrets.TERRAFORM_STATE_BUCKET_ENDPOINT }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.TERRAFORM_STATE_TOKEN_VALUE }}
           TF_VAR_cloudflare_account_id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           TF_VAR_cloudflare_api_token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
