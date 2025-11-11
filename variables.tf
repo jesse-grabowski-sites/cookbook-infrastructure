@@ -1,14 +1,3 @@
-variable "terraform_state_bucket_name" {
-  type        = string
-  description = "Name of the bucket that holds terraform state"
-  nullable    = false
-
-  validation {
-    condition     = can(regex("^(?=.{3,63}$)[a-z0-9][a-z0-9.-]*[a-z0-9]$", var.terraform_state_bucket_name))
-    error_message = "terraform_state_bucket_name must be 3–63 chars, lowercase letters, numbers, dots, or hyphens; no leading/trailing dots or hyphens."
-  }
-}
-
 variable "cloudflare_api_token" {
   type        = string
   description = "Cloudflare API token with least-privilege for managing the Pages project and domain."
